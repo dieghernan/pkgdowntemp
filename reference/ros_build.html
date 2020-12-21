@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build your pkgdown website — ros_build • rostemplate</title>
+<title>Build your pkgdown website locally. — ros_build • rostemplate</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,8 +54,8 @@
 <!-- rOpenSpain -->
 <link href="../ropenspain.css" rel="stylesheet">
 
-<meta property="og:title" content="Build your pkgdown website — ros_build" />
-<meta property="og:description" content="A wrapper of build_site" />
+<meta property="og:title" content="Build your pkgdown website locally. — ros_build" />
+<meta property="og:description" content="A wrapper of pkgdown::build_site" />
 
 
 
@@ -105,7 +105,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/dieghernan/pkgdowntemp/">
+  <a href="https://github.com/dieghernan/rostemplate/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -124,13 +124,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build your pkgdown website</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dieghernan/pkgdowntemp/blob/master/R/ros_build.R'><code>R/ros_build.R</code></a></small>
+    <h1>Build your pkgdown website locally.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/dieghernan/rostemplate/blob/master/R/ros_build.R'><code>R/ros_build.R</code></a></small>
     <div class="hidden name"><code>ros_build.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A wrapper of <a href='https://pkgdown.r-lib.org/reference/build_site.html'>build_site</a></p>
+    <p>A wrapper of <code><a href='https://pkgdown.r-lib.org/reference/build_site.html'>pkgdown::build_site</a></code></p>
     </div>
 
     <pre class="usage"><span class='fu'>ros_build</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -140,10 +140,21 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>pkg, ...</th>
-      <td><p>See <a href='https://pkgdown.r-lib.org/reference/build_site.html'>build_site</a>.</p></td>
+      <td><p>See <code><a href='https://pkgdown.r-lib.org/reference/build_site.html'>?pkgdown::build_site</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function would ask for confirmation to check your
+<code>_pkgdown.yml</code> file and would create your pkgdown site on the /docs
+folder.</p>
+<p>Unlike <a href='ros_gh_actions_branch.html'>ros_gh_actions_branch</a>, the user would trigger the build and
+it is possible to control it via the parameters of
+<code><a href='https://pkgdown.r-lib.org/reference/build_site.html'>pkgdown::build_site</a></code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='ros_gh_actions_branch.html'>ros_gh_actions_branch</a></code>, <code><a href='https://pkgdown.r-lib.org/reference/build_site.html'>build_site</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

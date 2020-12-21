@@ -59,7 +59,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/dieghernan/pkgdowntemp/">
+  <a href="https://github.com/dieghernan/rostemplate/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -80,7 +80,7 @@
       <h1 data-toc-skip>Cómo usar esta plantilla</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dieghernan/pkgdowntemp/blob/master/vignettes/rostemplate.Rmd"><code>vignettes/rostemplate.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dieghernan/rostemplate/blob/master/vignettes/rostemplate.Rmd"><code>vignettes/rostemplate.Rmd</code></a></small>
       <div class="hidden name"><code>rostemplate.Rmd</code></div>
 
     </div>
@@ -90,17 +90,17 @@
 <div id="introducción" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introducci%C3%B3n" class="anchor"></a>Introducción</h1>
-<p>Este paquete es un <em>proof of concept</em> sobre cómo crear una plantilla de <code>pkgdown</code> adaptada. En este paquete la plantilla base que se adaptará se basa en la empleada por la comunidad <a href="https://ropenspain.es/">rOpenSpain</a>, que a su vez es una adaptación de la plantilla <a href="https://bootstrapious.com/p/universal-business-e-commerce-template">Universal</a> creada por Bootstrapius con la variación de color <strong>violet</strong>.</p>
+<p>Este paquete es un <em>proof of concept</em> sobre cómo crear una plantilla de <code>pkgdown</code> adaptada. En este paquete la plantilla base que se adaptará se basa en la empleada por la comunidad <a href="https://ropenspain.es/">rOpenSpain</a>, que a su vez es una adaptación de la plantilla <a href="https://bootstrapious.com/p/universal-business-e-commerce-template">Universal</a> creada por <a href="https://bootstrapious.com/p/universal-business-e-commerce-template">Bootstrapius</a> con la variación de color <strong>violet</strong>.</p>
 <div id="limitaciones" class="section level2">
 <h2 class="hasAnchor">
 <a href="#limitaciones" class="anchor"></a>Limitaciones</h2>
-<p>El diseño original de las plantillas que componen <code>pkgdown</code> es bastante rígido, en el sentido de que ligeras modificaciones (como el tipo de navbar o la localizaxion del footer) pueden provocar que el renderizado final no sea óptimo. Para solucionarlo se han empleado algunos <em>hacks</em> en el fichero <code>css</code> y pequeños fragmentos en <code>javascript</code>.</p>
+<p>El diseño original de las plantillas que componen <code>pkgdown</code> es bastante rígido, en el sentido de que ligeras modificaciones (como el tipo de <em>navbar</em> o la localización del <em>footer</em>) pueden provocar que el renderizado final no sea óptimo. Para solucionarlo se han empleado algunos <em>hacks</em> en el fichero <code>css</code> y pequeños fragmentos en <code>javascript</code>.</p>
 <p>Otra limitación es la diferencia de versiones Bootstrap, ya que <code>pkgdown</code> emplea la versión 3.4.1 mientras que Universal emplea la 3.3.7.</p>
 </div>
 </div>
-<div id="configuración" class="section level1">
+<div id="configuración-previa" class="section level1">
 <h1 class="hasAnchor">
-<a href="#configuraci%C3%B3n" class="anchor"></a>Configuración</h1>
+<a href="#configuraci%C3%B3n-previa" class="anchor"></a>Configuración previa</h1>
 <p>En la raíz del proyecto ha de existir un archivo <code>_pkgdown.yaml</code> con al menos las siguientes líneas:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">template</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="at">  </span><span class="fu">package</span><span class="kw">:</span><span class="at"> rostemplate</span></span>
@@ -115,16 +115,28 @@
 <div id="con-github-actions---ci" class="section level2">
 <h2 class="hasAnchor">
 <a href="#con-github-actions---ci" class="anchor"></a>Con GitHub actions - CI</h2>
-<p>GitHub Actions permite automatizar procesos cuando se activa un trigger. En este caso se han preparado dos acciones que actualizan el sitio estático cada vez que se añade un <em>commit</em> al repositorio.</p>
+<p>GitHub Actions permite automatizar procesos cuando se activa un <em>trigger</em>. En este caso se han preparado dos acciones que actualizan el sitio estático cada vez que se añade un <em>commit</em> al repositorio.</p>
 <p>Los flujos de trabajo consisten en archivos con extensión <code>.yaml</code>. La acción <a href="https://github.com/dieghernan/rostemplate/blob/main/inst/yaml/rostemplate-docs.yaml">rostemplate-docs.yaml</a> crea el sitio estático en la carpeta <code>./docs</code> mientras que <a href="https://github.com/dieghernan/rostemplate/blob/main/inst/yaml/rostemplate-gh-pages.yaml">rostemplate-gh-pages.yaml</a> crea el sitio estático en el branch <code>gh-pages</code>.</p>
 <p>Para configurar esta opción, es necesario disponer en el repositorio de una carpeta en la ruta <code>.github/workflows</code> y copiar la acción deseada en dicha carpeta.</p>
-<p>El paquete contiene dos funciones que realizan esta configuración:</p>
+<div id="alternativa-usando-las-funciones-de-rostemplate" class="section level3">
+<h3 class="hasAnchor">
+<a href="#alternativa-usando-las-funciones-de-rostemplate" class="anchor"></a>Alternativa usando las funciones de <code>rostemplate</code>
+</h3>
+<p>Aunque el uso del paquete <code>rostemplate</code> en si no es necesario con GitHub actions, se han desarrollado dos funciones que automatizan esta configuración de manera automática. Estas funciones simplemente crean el directorio <code>.github/workflows</code> si no existiera previamente y copian los archivos solicitados en la ruta correspondiente:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Deploy to gh-branch</span>
-<span class="kw">if</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"dieghernan/rostemplate"</span>,
+                          build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="fu">rostemplate</span><span class="fu">::</span><span class="fu"><a href="../reference/ros_gh_actions_branch.html">ros_gh_actions_branch</a></span><span class="op">(</span><span class="op">)</span>
   
-  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"dieghernan/rostemplate"</span><span class="op">)</span>
-  <span class="fu">rostemplate</span><span class="fu">::</span><span class="fu"><a href="../reference/ros_gh_branch.html">ros_gh_branch</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Deploy to docs folder</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"dieghernan/rostemplate"</span>,
+                          build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="fu">rostemplate</span><span class="fu">::</span><span class="fu"><a href="../reference/ros_gh_actions_docs_folder.html">ros_gh_actions_docs_folder</a></span><span class="op">(</span><span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
 <p>Es posible cambiar el evento que desencadena la actualización del sitio:</p>
@@ -142,26 +154,28 @@
 <span id="cb3-12"><a href="#cb3-12"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">'_pkgdown.yaml'</span></span></code></pre></div>
-<p>Más información <a href="https://docs.github.com/es/free-pro-team@latest/actions/reference/events-that-trigger-workflows">aquí</a>.</p>
+<p>Más información sobre cómo adaptar los <em>triggers</em> de la acción <a href="https://docs.github.com/es/free-pro-team@latest/actions/reference/events-that-trigger-workflows">aquí</a>.</p>
+</div>
 </div>
 <div id="rstudio---manual" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rstudio---manual" class="anchor"></a>RStudio - manual</h2>
-<p>El sitio estático se puede generar igualmente desde una sesión local en RStudio. Para ello, es necesario instalar este paquete en el ordenador y luego usar las funcionalidades propias de <code>pkgdown</code>:</p>
+<p>El sitio estático se puede generar igualmente desde una sesión local en RStudio. Para ello, es necesario instalar este paquete usando <code>remotes</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  
-  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"dieghernan/rostemplate"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"dieghernan/rostemplate"</span>,
+                          build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu">rostemplate</span><span class="fu">::</span><span class="fu"><a href="../reference/ros_build.html">ros_build</a></span><span class="op">(</span><span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
-<p>Es necesario actualizar el repositorio remoto en GitHub tras ejecutar el script anterior.</p>
+<p>La función <code><a href="../reference/ros_build.html">rostemplate::ros_build()</a></code> no es más que un alias de <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site</a></code>, aportando únicamente un control sobre la configuración del archivo <code>_pkgdown.yml</code></p>
+<p>Una vez generado el sitio, es necesario actualizar el repositorio remoto en GitHub mediante un <em>commit</em>.</p>
 </div>
 </div>
 <div id="github-pages" class="section level1">
 <h1 class="hasAnchor">
 <a href="#github-pages" class="anchor"></a>GitHub Pages</h1>
-<p>Una vez generado el sitio estático y subido al repositorio en GitHub, el último paso es generar el sitio web a través de los Settings de nuestro repositorio, seleccionando el origen deseado (<code>gh-pages</code>, <code>main/docs</code>, etc.).</p>
+<p>Una vez generado el sitio estático y subido al repositorio en GitHub, el último paso es activar el sitio web a través de los <em>Settings</em> de nuestro repositorio (<em>Setting&gt;GitHub Pages</em>), seleccionando el origen deseado (<code>gh-pages</code>, <code>main/docs</code>, etc.).</p>
 </div>
   </div>
 
